@@ -1,0 +1,164 @@
+{
+  "kolokolnia_kill": {
+    "sounds": [
+      "aethel:other/kill_effect/kolokolnia_kill"
+    ]
+  },
+  "moan1": {
+    "sounds": [
+      "aethel:hit_sounds/moan1"
+    ]
+  },
+  "moan2": {
+    "sounds": [
+      "aethel:hit_sounds/moan2"
+    ]
+  },
+  "moan3": {
+    "sounds": [
+      "aethel:hit_sounds/moan3"
+    ]
+  },
+  "moan4": {
+    "sounds": [
+      "aethel:hit_sounds/moan4"
+    ]
+  },
+  "module_disable": {
+    "sounds": [
+      "aethel:module_sounds/off"
+    ]
+  },
+  "module_enable": {
+    "sounds": [
+      "aethel:module_sounds/on"
+    ]
+  },
+  "off": {
+    "sounds": [
+      "aethel:module_sounds/off2"
+    ]
+  },
+  "on": {
+    "sounds": [
+      "aethel:module_sounds/on2"
+    ]
+  },
+  "crime": {
+    "sounds": [
+      "aethel:hit_sounds/crime"
+    ]
+  },
+  "frag_effect_echo_main": {
+    "sounds": [
+      "aethel:charmsfxpack/echocharmmain"
+    ]
+  },
+  "frag_effect_knock_main": {
+    "sounds": [
+      "aethel:charmsfxpack/knockcharmmain"
+    ]
+  },
+  "frag_effect_pulse": {
+    "sounds": [
+      "aethel:charmsfxpack/pulsecharmdistant0",
+      "aethel:charmsfxpack/pulsecharmdistant1",
+      "aethel:charmsfxpack/pulsecharmdistant2",
+      "aethel:charmsfxpack/pulsecharmdistant3",
+      "aethel:charmsfxpack/pulsecharmdistant4"
+    ]
+  },
+  "frag_effect_sparks_collision": {
+    "sounds": [
+      "aethel:charmsfxpack/sparkscollisionneared"
+    ]
+  },
+  "metallic": {
+    "sounds": [
+      "aethel:hit_sounds/metallic"
+    ]
+  },
+  "welcome": {
+    "sounds": [
+      "aethel:other/notification/notif"
+    ]
+  },
+  "module_enable_type2": {
+    "sounds": [
+      "aethel:module_sounds/on1"
+    ]
+  },
+  "module_disable_type2": {
+    "sounds": [
+      "aethel:module_sounds/off1"
+    ]
+  },
+  "mine": {
+    "sounds": [
+      "aethel:other/auto_mine/mine"
+    ]
+  },
+  "accountswitch": {
+    "sounds": [
+      "aethel:alt_manager/accountswitch"
+    ]
+  },
+  "searchtyping": {
+    "sounds": [
+      "aethel:clickgui/searchtyping"
+    ]
+  },
+  "slider": {
+    "sounds": [
+      "aethel:clickgui/slider"
+    ]
+  },
+  "switchcategory": {
+    "sounds": [
+      "aethel:clickgui/switchcategory"
+    ]
+  },
+  "no-settings": {
+    "sounds": [
+      "aethel:clickgui/no-settings"
+    ]
+  },
+  "buttonclick": {
+    "sounds": [
+      "aethel:clickgui/buttonclick"
+    ]
+  },
+  "unknowncommand": {
+    "sounds": [
+      "aethel:commands/unknowncommand"
+    ]
+  },
+  "entity.ribbit.ambient": {
+    "sounds": [
+      "aethel:entity/ribbit_ambient1",
+      "aethel:entity/ribbit_ambient2",
+      "aethel:entity/ribbit_ambient3",
+      "aethel:entity/ribbit_ambient4",
+      "aethel:entity/ribbit_ambient5"
+    ]
+  },
+  "entity.ribbit.step": {
+    "sounds": [
+      "aethel:entity/ribbit_step1",
+      "aethel:entity/ribbit_step2"
+    ]
+  },
+  "entity.ribbit.hurt": {
+    "sounds": [
+      "aethel:entity/ribbit_hurt1",
+      "aethel:entity/ribbit_hurt2",
+      "aethel:entity/ribbit_hurt3"
+    ]
+  },
+  "entity.ribbit.death": {
+    "sounds": [
+      "aethel:entity/ribbit_death1",
+      "aethel:entity/ribbit_death2"
+    ]
+  }
+}
