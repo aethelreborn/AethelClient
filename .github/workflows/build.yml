@@ -73,3 +73,9 @@ jobs:
           gh release upload "$TAG" \
             $(ls build/libs/*.jar | grep -v -- '-sources.jar' | grep -v -- '-dev.jar') \
             --repo "$GITHUB_REPOSITORY" --clobber
+
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "AethelClient ${VERSION}" \
+            --notes "Automated build of AethelClient ${VERSION} from ${GITHUB_SHA::7}." \
+            --latest
