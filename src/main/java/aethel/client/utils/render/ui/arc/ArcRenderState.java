@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.arc;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -28,6 +29,16 @@ final class ArcRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: no arc shader, draw a translucent fill of the arc fill color.
+            int color = arc.colors().length > 0 ? arc.colors()[0] : 0;
+            vertexColored(consumer, arc.x(), arc.y(), UiPipelineCompat.withAlphaScale(color, 0.6f));
+            vertexColored(consumer, arc.x(), arc.y() + arc.size(), UiPipelineCompat.withAlphaScale(color, 0.6f));
+            vertexColored(consumer, arc.x() + arc.size(), arc.y() + arc.size(), UiPipelineCompat.withAlphaScale(color, 0.6f));
+            vertexColored(consumer, arc.x() + arc.size(), arc.y(), UiPipelineCompat.withAlphaScale(color, 0.6f));
+            return;
+        }
+
         int batchIndex = ArcRenderer.getInstance().reserve(arc);
         if (batchIndex < 0) {
             return;
@@ -44,6 +55,10 @@ final class ArcRenderState implements GuiElementRenderState {
         vertex(consumer, x1, y0, 255, 0, batchIndex);
     }
 
+    private void vertexColored(VertexConsumer consumer, float x, float y, int color) {
+        consumer.addVertexWith2DPose(pose, x, y).setColor(color);
+    }
+
     private void vertex(VertexConsumer consumer, float x, float y, int coordX, int coordY, int batchIndex) {
         consumer.addVertexWith2DPose(pose, x, y)
                 .setColor(coordX, coordY, 255, 255)
@@ -52,7 +67,7 @@ final class ArcRenderState implements GuiElementRenderState {
 
     @Override
     public RenderPipeline pipeline() {
-        return ArcRenderer.ARC_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : ArcRenderer.ARC_PIPELINE;
     }
 
     @Override

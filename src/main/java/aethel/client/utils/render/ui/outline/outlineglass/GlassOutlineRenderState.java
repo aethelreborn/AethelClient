@@ -3,6 +3,7 @@ package aethel.client.utils.render.ui.outline.outlineglass;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import aethel.client.utils.render.ui.blur.BlurFramebuffer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -29,6 +30,20 @@ final class GlassOutlineRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: outline shape shader unavailable, draw a soft fill instead.
+            float x0 = outline.x();
+            float y0 = outline.y();
+            float x1 = outline.x() + outline.width();
+            float y1 = outline.y() + outline.height();
+
+            fillVertex(consumer, x0, y0);
+            fillVertex(consumer, x0, y1);
+            fillVertex(consumer, x1, y1);
+            fillVertex(consumer, x1, y0);
+            return;
+        }
+
         int batchIndex = GlassOutlineRenderer.getInstance().reserve(outline);
         if (batchIndex < 0) {
             return;
@@ -45,6 +60,11 @@ final class GlassOutlineRenderState implements GuiElementRenderState {
         vertex(consumer, x1, y0, batchIndex);
     }
 
+    private void fillVertex(VertexConsumer consumer, float x, float y) {
+        consumer.addVertexWith2DPose(pose, x, y)
+                .setColor(UiPipelineCompat.withAlphaScale(outline.color(), 0.45f));
+    }
+
     private void vertex(VertexConsumer consumer, float x, float y, int batchIndex) {
         consumer.addVertexWith2DPose(pose, x, y)
                 .setColor(outline.color())
@@ -53,12 +73,12 @@ final class GlassOutlineRenderState implements GuiElementRenderState {
 
     @Override
     public RenderPipeline pipeline() {
-        return GlassOutlineRenderer.GLASS_OUTLINE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : GlassOutlineRenderer.GLASS_OUTLINE_PIPELINE;
     }
 
     @Override
     public TextureSetup textureSetup() {
-        return BlurFramebuffer.getInstance().textureSetup();
+        return UiPipelineCompat.active() ? TextureSetup.noTexture() : BlurFramebuffer.getInstance().textureSetup();
     }
 
     @Override

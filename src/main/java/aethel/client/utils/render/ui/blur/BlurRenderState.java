@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.blur;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -28,6 +29,20 @@ final class BlurRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: plain translucent fill, no blur params/texture binding needed.
+            float x0 = blur.x();
+            float y0 = blur.y();
+            float x1 = blur.x() + blur.width();
+            float y1 = blur.y() + blur.height();
+
+            vertex(consumer, x0, y0, UiPipelineCompat.withAlphaScale(blur.colorTopLeft(), 0.6f));
+            vertex(consumer, x0, y1, UiPipelineCompat.withAlphaScale(blur.colorBottomLeft(), 0.6f));
+            vertex(consumer, x1, y1, UiPipelineCompat.withAlphaScale(blur.colorBottomRight(), 0.6f));
+            vertex(consumer, x1, y0, UiPipelineCompat.withAlphaScale(blur.colorTopRight(), 0.6f));
+            return;
+        }
+
         int batchIndex = BlurFramebuffer.getInstance().reserve(blur);
         if (batchIndex < 0) {
             return;
@@ -44,18 +59,22 @@ final class BlurRenderState implements GuiElementRenderState {
         vertex(consumer, x1, y0, blur.colorTopRight(), batchIndex);
     }
 
+    private void vertex(VertexConsumer consumer, float x, float y, int color) {
+        consumer.addVertexWith2DPose(pose, x, y).setColor(color);
+    }
+
     private void vertex(VertexConsumer consumer, float x, float y, int color, int batchIndex) {
         consumer.addVertexWith2DPose(pose, x, y).setColor(color).setLineWidth((float) (batchIndex + 1));
     }
 
     @Override
     public RenderPipeline pipeline() {
-        return BlurFramebuffer.BATCHED_BLUR_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : BlurFramebuffer.BATCHED_BLUR_PIPELINE;
     }
 
     @Override
     public TextureSetup textureSetup() {
-        return BlurFramebuffer.getInstance().textureSetup();
+        return UiPipelineCompat.active() ? TextureSetup.noTexture() : BlurFramebuffer.getInstance().textureSetup();
     }
 
     @Override

@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.rectangle.rectdefault;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -28,6 +29,15 @@ final class DefaultRectangleRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: vanilla pipeline expects position+color vertices.
+            vertexColored(consumer, rectangle.x(), rectangle.y(), rectangle.colorTopLeft());
+            vertexColored(consumer, rectangle.x(), rectangle.y() + rectangle.height(), rectangle.colorBottomLeft());
+            vertexColored(consumer, rectangle.x() + rectangle.width(), rectangle.y() + rectangle.height(), rectangle.colorBottomRight());
+            vertexColored(consumer, rectangle.x() + rectangle.width(), rectangle.y(), rectangle.colorTopRight());
+            return;
+        }
+
         if (!DefaultRectangleRenderer.getInstance().reserve(rectangle)) {
             return;
         }
@@ -43,13 +53,17 @@ final class DefaultRectangleRenderState implements GuiElementRenderState {
         vertex(consumer, x1, y0);
     }
 
+    private void vertexColored(VertexConsumer consumer, float x, float y, int color) {
+        consumer.addVertexWith2DPose(pose, x, y).setColor(color);
+    }
+
     private void vertex(VertexConsumer consumer, float x, float y) {
         consumer.addVertexWith2DPose(pose, x, y);
     }
 
     @Override
     public RenderPipeline pipeline() {
-        return DefaultRectangleRenderer.RECTANGLE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : DefaultRectangleRenderer.RECTANGLE_PIPELINE;
     }
 
     @Override

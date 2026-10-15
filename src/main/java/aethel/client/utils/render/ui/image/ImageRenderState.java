@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.image;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -36,10 +37,17 @@ final class ImageRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        boolean compat = UiPipelineCompat.active();
         for (ImageQuad image : images) {
-            int batchIndex = ImageRenderer.getInstance().reserve(image);
-            if (batchIndex < 0) {
-                continue;
+            int batchIndex;
+            if (compat) {
+                // No renderer bookkeeping needed for the fallback path.
+                batchIndex = -1;
+            } else {
+                batchIndex = ImageRenderer.getInstance().reserve(image);
+                if (batchIndex < 0) {
+                    continue;
+                }
             }
 
             float x0 = image.x();
@@ -55,10 +63,12 @@ final class ImageRenderState implements GuiElementRenderState {
     }
 
     private void vertex(VertexConsumer consumer, ImageQuad image, float x, float y, float u, float v, int color, int batchIndex) {
-        consumer.addVertexWith2DPose(pose, rotateX(image, x, y), rotateY(image, x, y))
+        var vertexConsumer = consumer.addVertexWith2DPose(pose, rotateX(image, x, y), rotateY(image, x, y))
                 .setUv(u, v)
-                .setColor(color)
-                .setLineWidth((float) (batchIndex + 1));
+                .setColor(color);
+        if (batchIndex >= 0) {
+            vertexConsumer.setLineWidth((float) (batchIndex + 1));
+        }
     }
 
     private void includeBounds(ImageQuad image, float x, float y) {
@@ -92,7 +102,7 @@ final class ImageRenderState implements GuiElementRenderState {
 
     @Override
     public RenderPipeline pipeline() {
-        return ImageRenderer.IMAGE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.texturedFallbackPipeline() : ImageRenderer.IMAGE_PIPELINE;
     }
 
     @Override

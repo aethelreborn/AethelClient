@@ -221,6 +221,12 @@ public final class BlurFramebuffer implements AutoCloseable {
     }
 
     public void requestCapture(GuiGraphics graphics, BuiltBlur blur) {
+        if (aethel.client.utils.render.RenderCompatibility.useVulkanCompatibility()) {
+            // Vulkan backends cannot compile the kawase/blur chain pipelines; the
+            // fallback states render a plain fill instead, so no capture is needed.
+            return;
+        }
+
         if (graphics == null || blur == null || !blur.visible()) {
             return;
         }

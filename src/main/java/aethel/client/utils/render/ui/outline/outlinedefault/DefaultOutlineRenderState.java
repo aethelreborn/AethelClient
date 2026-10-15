@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.outline.outlinedefault;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -28,6 +29,15 @@ final class DefaultOutlineRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: outline shape shader unavailable, draw a thin translucent fill.
+            vertexColored(consumer, outline.x(), outline.y(), UiPipelineCompat.withAlphaScale(outline.colorTopLeft(), 0.45f));
+            vertexColored(consumer, outline.x(), outline.y() + outline.height(), UiPipelineCompat.withAlphaScale(outline.colorBottomLeft(), 0.45f));
+            vertexColored(consumer, outline.x() + outline.width(), outline.y() + outline.height(), UiPipelineCompat.withAlphaScale(outline.colorBottomRight(), 0.45f));
+            vertexColored(consumer, outline.x() + outline.width(), outline.y(), UiPipelineCompat.withAlphaScale(outline.colorTopRight(), 0.45f));
+            return;
+        }
+
         int batchIndex = DefaultOutlineRenderer.getInstance().reserve(outline);
         if (batchIndex < 0) {
             return;
@@ -44,6 +54,10 @@ final class DefaultOutlineRenderState implements GuiElementRenderState {
         vertex(consumer, x1, y0, 255, 0, batchIndex);
     }
 
+    private void vertexColored(VertexConsumer consumer, float x, float y, int color) {
+        consumer.addVertexWith2DPose(pose, x, y).setColor(color);
+    }
+
     private void vertex(VertexConsumer consumer, float x, float y, int coordX, int coordY, int batchIndex) {
         consumer.addVertexWith2DPose(pose, x, y)
                 .setColor(coordX, coordY, 255, 255)
@@ -52,7 +66,7 @@ final class DefaultOutlineRenderState implements GuiElementRenderState {
 
     @Override
     public RenderPipeline pipeline() {
-        return DefaultOutlineRenderer.OUTLINE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : DefaultOutlineRenderer.OUTLINE_PIPELINE;
     }
 
     @Override

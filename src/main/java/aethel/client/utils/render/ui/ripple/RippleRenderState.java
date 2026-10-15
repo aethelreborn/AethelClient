@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.ripple;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -20,6 +21,16 @@ public final class RippleRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        if (UiPipelineCompat.active()) {
+            // Vulkan backend: no ripple shader, draw a translucent fill of the target color.
+            int color = UiPipelineCompat.withAlphaScale(ripple.targetColor(), 0.5f);
+            consumer.addVertexWith2DPose(pose, ripple.x(), ripple.y()).setColor(color);
+            consumer.addVertexWith2DPose(pose, ripple.x(), ripple.y() + ripple.height()).setColor(color);
+            consumer.addVertexWith2DPose(pose, ripple.x() + ripple.width(), ripple.y() + ripple.height()).setColor(color);
+            consumer.addVertexWith2DPose(pose, ripple.x() + ripple.width(), ripple.y()).setColor(color);
+            return;
+        }
+
         if (!RippleRenderer.getInstance().reserve(ripple)) {
             return;
         }
@@ -32,7 +43,7 @@ public final class RippleRenderState implements GuiElementRenderState {
 
     @Override
     public RenderPipeline pipeline() {
-        return RippleRenderer.RIPPLE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.fillFallbackPipeline() : RippleRenderer.RIPPLE_PIPELINE;
     }
 
     @Override

@@ -2,6 +2,7 @@ package aethel.client.utils.render.ui.rectangle.recthalficon;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -42,10 +43,17 @@ final class HalfIconRectangleRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        boolean compat = UiPipelineCompat.active();
         for (PatternBatch batch : batches) {
-            int batchIndex = HalfIconRectangleRenderer.getInstance().reserve(batch.rectangle());
-            if (batchIndex < 0) {
-                continue;
+            int batchIndex;
+            if (compat) {
+                // No renderer bookkeeping needed for the fallback path.
+                batchIndex = -1;
+            } else {
+                batchIndex = HalfIconRectangleRenderer.getInstance().reserve(batch.rectangle());
+                if (batchIndex < 0) {
+                    continue;
+                }
             }
 
             for (IconQuad quad : batch.quads()) {
@@ -58,15 +66,17 @@ final class HalfIconRectangleRenderState implements GuiElementRenderState {
     }
 
     private void vertex(VertexConsumer consumer, float x, float y, float u, float v, int color, int batchIndex) {
-        consumer.addVertexWith2DPose(pose, x, y)
+        var vertexConsumer = consumer.addVertexWith2DPose(pose, x, y)
                 .setUv(u, v)
-                .setColor(color)
-                .setLineWidth((float) (batchIndex + 1));
+                .setColor(color);
+        if (batchIndex >= 0) {
+            vertexConsumer.setLineWidth((float) (batchIndex + 1));
+        }
     }
 
     @Override
     public RenderPipeline pipeline() {
-        return HalfIconRectangleRenderer.HALF_ICON_RECTANGLE_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.texturedFallbackPipeline() : HalfIconRectangleRenderer.HALF_ICON_RECTANGLE_PIPELINE;
     }
 
     @Override

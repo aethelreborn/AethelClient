@@ -2,6 +2,7 @@ package aethel.client.utils.render.item;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import aethel.client.utils.render.ui.UiPipelineCompat;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.render.state.GuiElementRenderState;
@@ -67,10 +68,17 @@ final class ItemRenderState implements GuiElementRenderState {
 
     @Override
     public void buildVertices(VertexConsumer consumer) {
+        boolean compat = UiPipelineCompat.active();
         for (int i = 0; i < quadCount; i++) {
-            int batchIndex = CustomItemRenderer.getInstance().reserve(glints[i]);
-            if (batchIndex < 0) {
-                continue;
+            int batchIndex;
+            if (compat) {
+                // No renderer bookkeeping needed for the fallback path.
+                batchIndex = -1;
+            } else {
+                batchIndex = CustomItemRenderer.getInstance().reserve(glints[i]);
+                if (batchIndex < 0) {
+                    continue;
+                }
             }
 
             int offset = i * FLOATS_PER_QUAD;
@@ -83,15 +91,17 @@ final class ItemRenderState implements GuiElementRenderState {
     }
 
     private void vertex(VertexConsumer consumer, float x, float y, float u, float v, int color, int batchIndex) {
-        consumer.addVertexWith2DPose(pose, x, y)
+        var vertexConsumer = consumer.addVertexWith2DPose(pose, x, y)
                 .setUv(u, v)
-                .setColor(color)
-                .setLineWidth((float) (batchIndex + 1));
+                .setColor(color);
+        if (batchIndex >= 0) {
+            vertexConsumer.setLineWidth((float) (batchIndex + 1));
+        }
     }
 
     @Override
     public RenderPipeline pipeline() {
-        return CustomItemRenderer.ITEM_PIPELINE;
+        return UiPipelineCompat.active() ? UiPipelineCompat.texturedFallbackPipeline() : CustomItemRenderer.ITEM_PIPELINE;
     }
 
     @Override
