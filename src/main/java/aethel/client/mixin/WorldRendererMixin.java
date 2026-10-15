@@ -141,6 +141,9 @@ public class WorldRendererMixin implements IMinecraft {
             return;
         }
         RenderCompatibility.primeFromCurrentContext();
+        if (RenderCompatibility.useVulkanCompatibility()) {
+            return;
+        }
 
         PoseStack stack = new PoseStack();
         stack.mulPose(new Matrix4f(positionMatrix));
