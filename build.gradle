@@ -5,7 +5,8 @@ plugins {
 
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
-version = providers.gradleProperty('mod_version').getOrElse('1.0.0')group = 'aethel'
+version = providers.gradleProperty('mod_version').getOrElse('1.0.0')
+group = 'aethel'
 
 
 repositories {
