@@ -345,7 +345,13 @@ public final class ModuleManager {
             KeyBind bind = module.getBind();
             boolean down = bind.isDown(handle);
             boolean wasDown = bindStates.getOrDefault(module, false);
-            if (down && !wasDown) {
+            if (module.isHoldBind()) {
+                // Vape-style hold mode: enabled for exactly as long as the
+                // bind is physically held.
+                if (down != wasDown) {
+                    module.setEnabled(down);
+                }
+            } else if (down && !wasDown) {
                 module.toggle();
             }
             bindStates.put(module, down);

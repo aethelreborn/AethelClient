@@ -6,6 +6,7 @@ import aethel.client.api.events.bus.EventBus;
 import aethel.client.api.events.impl.ModuleToggleEvent;
 import aethel.client.api.module.exception.ModuleException;
 import aethel.client.api.settings.Setting;
+import aethel.client.api.settings.impl.BooleanSetting;
 import aethel.client.api.settings.bind.KeyBind;
 import aethel.client.api.settings.impl.BindSetting;
 import aethel.client.api.drag.impl.Notifications;
@@ -23,6 +24,7 @@ public abstract class Module implements IMinecraft {
     private final List<Setting<?>> settingsView = Collections.unmodifiableList(settings);
     private final List<ModuleStateListener> listeners = new ArrayList<>();
     private final BindSetting bindSetting = new BindSetting("Bind", "Module key bind.", KeyBind.NONE, false);
+    private final BooleanSetting holdBind = register(new BooleanSetting("Hold Bind", "Keep the module enabled only while the bind is held (hold mode)", false));
     private EventBus eventBus;
     private boolean enabled;
     private boolean hidden;
@@ -72,6 +74,14 @@ public abstract class Module implements IMinecraft {
 
     public final void setBind(KeyBind bind) {
         bindSetting.setValue(bind);
+    }
+
+    /**
+     * Vape-style hold mode: the module stays enabled only while the bind
+     * key is physically held instead of toggling on each press.
+     */
+    public final boolean isHoldBind() {
+        return holdBind.getValue();
     }
 
     public final boolean isEnabled() {
