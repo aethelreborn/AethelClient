@@ -30,6 +30,9 @@ import aethel.client.api.module.impl.misc.ClientSounds;
 import aethel.client.api.module.impl.misc.SelfDestructModule;
 import aethel.client.api.module.impl.combat.AutoClicker;
 import aethel.client.api.module.impl.combat.Reach;
+import aethel.client.api.module.impl.misc.Timer;
+import aethel.client.api.module.impl.misc.AutoFish;
+import aethel.client.api.module.impl.movement.Scaffold;
 import aethel.client.api.module.impl.movement.NoFall;
 import aethel.client.api.module.impl.movement.AntiAFK;
 import aethel.client.api.module.impl.movement.SafeWalk;
@@ -302,6 +305,9 @@ public final class ModuleManager {
         register(new Step());
         register(new AutoArmor());
         register(new BaseFinder());
+        register(new Timer());
+        register(new AutoFish());
+        register(new Scaffold());
         register(new FullBright());
     }
 
