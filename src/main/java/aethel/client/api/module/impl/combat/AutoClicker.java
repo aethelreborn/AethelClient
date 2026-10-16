@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MaceItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import aethel.client.api.events.annotation.SubscribeEvent;
 import aethel.client.api.events.impl.TickEvent;
@@ -73,7 +73,12 @@ public final class AutoClicker extends Module {
     }
 
     private boolean isWeapon(Item item) {
-        return item instanceof SwordItem
+        return item == Items.WOODEN_SWORD
+                || item == Items.STONE_SWORD
+                || item == Items.IRON_SWORD
+                || item == Items.GOLDEN_SWORD
+                || item == Items.DIAMOND_SWORD
+                || item == Items.NETHERITE_SWORD
                 || item instanceof AxeItem
                 || item instanceof MaceItem
                 || item instanceof TridentItem;

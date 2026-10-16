@@ -1,7 +1,7 @@
 package aethel.client.api.module.impl.combat;
 
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,7 +16,7 @@ import aethel.client.api.settings.impl.NumberSetting;
  * vanilla calculations (no raytracing hacks).
  */
 public final class Reach extends Module {
-    public static final ResourceLocation REACH_ID = ResourceLocation.fromNamespaceAndPath("aethelclient", "reach");
+    public static final Identifier REACH_ID = Identifier.fromNamespaceAndPath("aethelclient", "reach");
 
     private final NumberSetting entityRange = register(new NumberSetting("Entity Distance", "Extra reach towards entities.", 0.5D, 0.0D, 2.5D, 0.1D));
     private final NumberSetting blockRange = register(new NumberSetting("Block Distance", "Extra reach for block interaction.", 0.5D, 0.0D, 2.5D, 0.1D));
