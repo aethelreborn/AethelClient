@@ -30,7 +30,7 @@ public final class AntiAFK extends Module {
         if (client.player == null || client.level == null || client.screen != null) {
             return;
         }
-        if (onlyOwnMotion.getValue() && client.input.keyUp.isDown()) {
+        if (onlyOwnMotion.getValue() && isPlayerSteering(client)) {
             return;
         }
 
@@ -40,6 +40,14 @@ public final class AntiAFK extends Module {
             return;
         }
         ticksUntilAction--;
+    }
+
+    private boolean isPlayerSteering(Minecraft client) {
+        return client.options.keyUp.isDown()
+                || client.options.keyDown.isDown()
+                || client.options.keyLeft.isDown()
+                || client.options.keyRight.isDown()
+                || client.options.keyJump.isDown();
     }
 
     private void perform(Minecraft client) {
