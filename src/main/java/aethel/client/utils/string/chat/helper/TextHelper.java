@@ -77,6 +77,7 @@ public class TextHelper {
             case "white_black" -> applyGradient(text, GradientStyle.FULL_GRADIENT, ColorAssist.colorForTextWhite$(), ColorAssist.colorForRectsBlack$(), bold);
             case "custom_purple" -> applyGradient(text, GradientStyle.FULL_GRADIENT, ColorAssist.colorForTextCustom$(), ColorAssist.colorForRectsCustom$(), bold);
             case "black_light_purple" -> applyGradient(text, GradientStyle.FULL_GRADIENT, ColorAssist.colorForRectsBlack$(), ColorAssist.toColor("#DA70D6"), bold);
+            case "aethel_blue" -> applyGradient(text, GradientStyle.FULL_GRADIENT, ColorAssist.toColor("#1B2A55"), ColorAssist.toColor("#5AA0FF"), bold);
             case "dark_red_bright_red" -> applyGradient(text, GradientStyle.FULL_GRADIENT, ColorAssist.toColor("#8B0000"), ColorAssist.red, bold);
             case "dark_red" -> applyGradient(text, GradientStyle.HALF_SPLIT, ColorAssist.toColor("#8B0000"), ColorAssist.toColor("#8B0000"), bold);
             case "red_white" -> applyGradient(text, GradientStyle.HALF_SPLIT, ColorAssist.red, ColorAssist.colorForTextWhite$(), bold);

@@ -95,7 +95,9 @@ public abstract class Module implements IMinecraft {
             }
         }
         Manager.postEvent(new ModuleToggleEvent(this, enabled));
-        Notifications.push("Notification", "Модуль " + name + (enabled ? " включён" : " выключён"));
+        if (Manager.getInstance() == null || !Manager.getInstance().isDestroyed()) {
+            Notifications.push(name, enabled ? "Module enabled" : "Module disabled");
+        }
         notifyChanged();
     }
 

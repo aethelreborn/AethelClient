@@ -10,11 +10,13 @@ import aethel.client.api.command.impl.FriendCommand;
 import aethel.client.api.command.impl.HelpCommand;
 import aethel.client.api.command.impl.MacroCommand;
 import aethel.client.api.command.impl.PrefixCommand;
+import aethel.client.api.command.impl.SelfDestructCommand;
 import aethel.client.api.command.impl.StaffCommand;
 import aethel.client.api.command.impl.WayCommand;
 import aethel.client.api.events.annotation.SubscribeEvent;
 import aethel.client.api.events.impl.ChatEvent;
 import aethel.client.api.events.impl.TabCompleteEvent;
+import aethel.client.manager.Manager;
 import aethel.client.utils.repository.RepositoryStorage;
 import aethel.client.utils.string.chat.ChatMessage;
 
@@ -51,6 +53,7 @@ public final class CommandManager {
         registerCommand(new WayCommand());
         registerCommand(new StaffCommand());
         registerCommand(new BlockESPCommand());
+        registerCommand(new SelfDestructCommand());
     }
 
     public void registerCommand(Command command) {
@@ -78,6 +81,9 @@ public final class CommandManager {
 
     @SubscribeEvent
     private void onChat(ChatEvent event) {
+        if (Manager.getInstance() != null && Manager.getInstance().isDestroyed()) {
+            return;
+        }
         String msg = event.getMessage();
         if (!msg.startsWith(prefix)) {
             return;

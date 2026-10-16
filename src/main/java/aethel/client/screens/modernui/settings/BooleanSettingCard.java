@@ -42,10 +42,10 @@ final class BooleanSettingCard extends SettingCardComponent<BooleanSetting> {
                 context.color(185, 185, 185, 50));
         if (animation > 0.01F) {
             Render2D.rect(boxX, boxY, 12.5f, 12.5f, 2f,
-                    context.withAlpha(new Color(145, 115, 185, 250), animation),
-                    context.withAlpha(new Color(195, 135, 195, 250), animation),
-                    context.withAlpha(new Color(145, 115, 185, 250), animation),
-                    context.withAlpha(new Color(125, 105, 145, 250), animation));
+                    context.withAlpha(new Color(70, 110, 220, 250), animation),
+                    context.withAlpha(new Color(130, 170, 255, 250), animation),
+                    context.withAlpha(new Color(70, 110, 220, 250), animation),
+                    context.withAlpha(new Color(55, 85, 180, 250), animation));
         }
 
         // Cross fades out, check fades in with the toggle animation.

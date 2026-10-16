@@ -26,10 +26,10 @@ public final class Header {
                     70,
                     0.7F,
                     3,
-                    new Color(180, 125, 255, Math.round(120.0F * focus)).getRGB(),
-                    new Color(180, 125, 255, Math.round(120.0F * focus)).getRGB(),
-                    new Color(180, 125, 255, Math.round(150.0F * focus)).getRGB(),
-                    new Color(180, 125, 255, Math.round(150.0F * focus)).getRGB()
+                    new Color(90, 145, 255, Math.round(120.0F * focus)).getRGB(),
+                    new Color(90, 145, 255, Math.round(120.0F * focus)).getRGB(),
+                    new Color(90, 145, 255, Math.round(150.0F * focus)).getRGB(),
+                    new Color(90, 145, 255, Math.round(150.0F * focus)).getRGB()
             );
         }
 

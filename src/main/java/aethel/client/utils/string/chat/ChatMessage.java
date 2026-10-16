@@ -12,19 +12,19 @@ public final class ChatMessage {
     }
 
     public static MutableComponent brandmessage() {
-        return (MutableComponent) TextHelper.applyPredefinedGradient("Aethel", "black_light_purple", true);
+        return (MutableComponent) TextHelper.applyPredefinedGradient("Aethel", "aethel_blue", true);
     }
 
     public static MutableComponent blockesp() {
-        return (MutableComponent) TextHelper.applyPredefinedGradient("Block Esp", "black_light_purple", true);
+        return (MutableComponent) TextHelper.applyPredefinedGradient("Block Esp", "aethel_blue", true);
     }
 
     public static MutableComponent autobuy() {
-        return (MutableComponent) TextHelper.applyPredefinedGradient("Auto Buy", "black_light_purple", true);
+        return (MutableComponent) TextHelper.applyPredefinedGradient("Auto Buy", "aethel_blue", true);
     }
 
     public static MutableComponent autobuiparcer() {
-        return (MutableComponent) TextHelper.applyPredefinedGradient("Parce price", "black_light_purple", true);
+        return (MutableComponent) TextHelper.applyPredefinedGradient("Parce price", "aethel_blue", true);
     }
 
     public static void brandmessage(String message) {
@@ -34,7 +34,7 @@ public final class ChatMessage {
     public static void brandmessage(Component message) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
-            Component prefix = TextHelper.applyPredefinedGradient("Aethel -> ", "black_light_purple", true);
+            Component prefix = TextHelper.applyPredefinedGradient("Aethel -> ", "aethel_blue", true);
             mc.player.displayClientMessage(prefix.copy().append(message == null ? Component.empty() : message), false);
         }
     }
@@ -74,7 +74,7 @@ public final class ChatMessage {
     private static void prefixed(String prefixText, Component message) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
-            Component prefix = TextHelper.applyPredefinedGradient(prefixText, "black_light_purple", true);
+            Component prefix = TextHelper.applyPredefinedGradient(prefixText, "aethel_blue", true);
             mc.player.displayClientMessage(prefix.copy().append(message), false);
         }
     }

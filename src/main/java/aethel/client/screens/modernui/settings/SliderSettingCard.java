@@ -47,10 +47,10 @@ final class SliderSettingCard extends SettingCardComponent<NumberSetting> {
                 context.color(185, 185, 185, 50),
                 context.color(185, 185, 185, 50));
         Render2D.rect(sliderX, sliderY, sliderWidth * state.sliderProgress, 3, 0.5f,
-                context.color(145, 115, 185, 250),
-                context.color(195, 135, 195, 250),
-                context.color(145, 115, 185, 250),
-                context.color(125, 105, 145, 250));
+                context.color(70, 110, 220, 250),
+                context.color(130, 170, 255, 250),
+                context.color(70, 110, 220, 250),
+                context.color(55, 85, 180, 250));
         Render2D.rect(sliderX + sliderWidth * state.sliderProgress - 2.0F, sliderY - 1.5F, 6, 6, 2f, context.color(255, 255, 255, 255));
     }
 

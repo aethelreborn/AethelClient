@@ -12,12 +12,25 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import aethel.client.api.events.impl.PlayerTravelEvent;
 import aethel.client.api.events.impl.SwimmingEvent;
+import aethel.client.api.module.ModuleManager;
+import aethel.client.api.module.impl.movement.NoFall;
+import aethel.client.manager.Manager;
 import aethel.client.api.module.impl.combat.aura.Angle;
 import aethel.client.api.module.impl.combat.aura.AngleConnection;
-import aethel.client.manager.Manager;
 
 @Mixin(Player.class)
 public abstract class PlayerEntityMixin {
+    @Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true, require = 0)
+    private void aethel$noFallDamage(double fallDistance, float multiplier, net.minecraft.world.damagesource.DamageSource source,
+                                     org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if ((Object) this == Minecraft.getInstance().player) {
+            ModuleManager manager = Manager.getModules();
+            if (manager != null && manager.isEnabled(NoFall.class)) {
+                cir.setReturnValue(false);
+            }
+        }
+    }
+
     @Unique
     private boolean aethel$restoreAttackYaw;
 

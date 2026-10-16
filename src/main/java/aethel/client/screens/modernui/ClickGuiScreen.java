@@ -126,11 +126,28 @@ public final class ClickGuiScreen extends Screen {
         if (background.keyPressed(event)) {
             return true;
         }
-        if (event.key() == GLFW.GLFW_KEY_RIGHT_CONTROL || event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == GLFW.GLFW_KEY_ESCAPE || closesWithBind(event.key())) {
             onClose();
             return true;
         }
         return super.keyPressed(event);
+    }
+
+    /**
+     * Closes the GUI when the key matches the ClickGui module bind so the
+     * same key both opens and closes the panel.
+     */
+    private boolean closesWithBind(int key) {
+        ModuleManager modules = Manager.getModules();
+        if (modules == null || key < 0) {
+            return false;
+        }
+        Module clickGui = modules.getByType(aethel.client.api.module.impl.misc.ClickGuiModule.class).orElse(null);
+        if (clickGui == null) {
+            return key == GLFW.GLFW_KEY_RIGHT_CONTROL;
+        }
+        aethel.client.api.settings.bind.KeyBind bind = clickGui.getBind();
+        return bind.getType() == aethel.client.api.settings.bind.InputType.KEYBOARD && bind.getCode() == key;
     }
 
     @Override

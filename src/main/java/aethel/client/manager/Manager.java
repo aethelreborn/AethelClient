@@ -1,7 +1,7 @@
 package aethel.client.manager;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import aethel.client.api.command.CommandManager;
 import aethel.client.api.config.ConfigManager;
 import aethel.client.api.drag.core.ElementManager;
@@ -28,6 +28,7 @@ public class Manager {
     private ConfigManager configManager;
     private CommandManager commandManager;
     private boolean clickGuiTextWarmed;
+    private boolean destroyed;
 
     public void initClient() {
         instance = this;
@@ -62,6 +63,37 @@ public class Manager {
         ClientTickEvents.END_CLIENT_TICK.register(client -> postEvent(new TickEvent.Post(client)));
     }
 
+    /**
+     * Vape-style self destruct: persists config, disables every module,
+     * closes any Aethel screen and silences every client surface until the
+     * game is restarted.
+     */
+    public void selfDestruct() {
+        if (destroyed) {
+            return;
+        }
+        destroyed = true;
+
+        if (configManager != null) {
+            try {
+                configManager.saveAll();
+            } catch (Exception ignored) {
+            }
+        }
+        if (moduleManager != null) {
+            moduleManager.destroy();
+        }
+
+        Minecraft client = Minecraft.getInstance();
+        if (client != null && client.screen != null) {
+            client.setScreen(null);
+        }
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     public static Manager getInstance() {
         return instance;
     }
@@ -94,6 +126,9 @@ public class Manager {
     }
 
     public static void toggleClickGui(Minecraft client) {
+        if (client == null || instance == null || instance.destroyed) {
+            return;
+        }
         if (client.screen instanceof ClickGuiScreen) {
             client.screen.onClose();
             return;

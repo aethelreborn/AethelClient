@@ -13,11 +13,16 @@ public final class GuiTheme {
     public static final float PANEL_RADIUS = 11.0F;
     public static final float SHELL_RADIUS = 11.0F;
 
-    /** Soft violet accent used across cards, sliders and highlights. */
-    public static final int ACCENT = rgb(180, 125, 255);
-    public static final int ACCENT_SOFT = rgb(145, 115, 185);
-    public static final int ACCENT_LIGHT = rgb(195, 135, 195);
-    public static final int ACCENT_DEEP = rgb(125, 105, 145);
+    /** Bright azure accent used across cards, sliders and highlights. */
+    public static final int ACCENT = rgb(90, 145, 255);
+    public static final int ACCENT_SOFT = rgb(70, 110, 220);
+    public static final int ACCENT_LIGHT = rgb(130, 170, 255);
+    public static final int ACCENT_DEEP = rgb(45, 70, 165);
+
+    /** Deep navy overlays used for dark glass surfaces. */
+    public static final int NAVY_DUSK = rgb(10, 16, 34);
+    public static final int NAVY_DEEP = rgb(18, 28, 60);
+    public static final int NAVY_RAIL = rgb(140, 170, 235);
 
     public static final int TEXT_PRIMARY = rgb(235, 235, 245);
     public static final int TEXT_SECONDARY = rgb(150, 150, 160);
@@ -39,13 +44,13 @@ public final class GuiTheme {
         return rgb(0, 0, 0, alpha);
     }
 
-    /** Frosted glass surface fill (4-corner), tuned for the panel material. */
+    /** Dark blue glass surface fill (4-corner), tuned for the panel material. */
     public static int[] glassSurface(int alpha) {
         return new int[]{
-                rgb(255, 255, 255, alpha),
-                rgb(255, 255, 255, alpha),
-                rgb(96, 96, 108, alpha),
-                rgb(96, 96, 108, alpha)
+                rgb(140, 170, 235, alpha),
+                rgb(140, 170, 235, alpha),
+                rgb(38, 56, 104, alpha),
+                rgb(38, 56, 104, alpha)
         };
     }
 
@@ -53,10 +58,10 @@ public final class GuiTheme {
     public static int[] glassBorder(int alpha) {
         int soft = Math.min(255, (int) (alpha * 1.4F));
         return new int[]{
-                rgb(255, 255, 255, alpha),
-                rgb(255, 255, 255, alpha),
-                rgb(140, 140, 150, soft),
-                rgb(140, 140, 150, soft)
+                rgb(170, 195, 255, alpha),
+                rgb(170, 195, 255, alpha),
+                rgb(70, 100, 180, soft),
+                rgb(70, 100, 180, soft)
         };
     }
 

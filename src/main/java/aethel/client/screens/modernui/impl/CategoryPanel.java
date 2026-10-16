@@ -58,10 +58,10 @@ public final class CategoryPanel {
                 1.6F,
                 8.0F,
                 0.8F,
-                new Color(180, 125, 255, 170).getRGB(),
-                new Color(180, 125, 255, 170).getRGB(),
-                new Color(195, 135, 195, 190).getRGB(),
-                new Color(180, 125, 255, 170).getRGB()
+                new Color(90, 145, 255, 170).getRGB(),
+                new Color(90, 145, 255, 170).getRGB(),
+                new Color(130, 170, 255, 190).getRGB(),
+                new Color(90, 145, 255, 170).getRGB()
         );
 
         for (int i = 0; i < categories.length; i++) {

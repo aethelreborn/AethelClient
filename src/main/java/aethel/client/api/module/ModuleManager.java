@@ -25,7 +25,14 @@ import aethel.client.api.module.impl.misc.AutoDuel;
 import aethel.client.api.module.impl.misc.AutoLes;
 import aethel.client.api.module.impl.misc.AutoLeave;
 import aethel.client.api.module.impl.misc.AutoTpAccept;
+import aethel.client.api.module.impl.misc.ClickGuiModule;
 import aethel.client.api.module.impl.misc.ClientSounds;
+import aethel.client.api.module.impl.misc.SelfDestructModule;
+import aethel.client.api.module.impl.combat.AutoClicker;
+import aethel.client.api.module.impl.combat.Reach;
+import aethel.client.api.module.impl.movement.NoFall;
+import aethel.client.api.module.impl.movement.AntiAFK;
+import aethel.client.api.module.impl.visual.FullBright;
 import aethel.client.api.module.impl.misc.DeathCoords;
 import aethel.client.api.module.impl.misc.ElytraHelper;
 import aethel.client.api.module.impl.misc.JoinerHelper;
@@ -92,6 +99,7 @@ public final class ModuleManager {
     private Collection<Module> modulesView = List.of();
     private final Map<Module, Boolean> bindStates = new IdentityHashMap<>();
     private Runnable dirtyListener = () -> {};
+    private boolean destroyed;
 
     public ModuleManager(EventBus eventBus) {
         this.eventBus = eventBus;
@@ -188,6 +196,9 @@ public final class ModuleManager {
 
     @SubscribeEvent
     private void onTick(TickEvent.Post event) {
+        if (destroyed) {
+            return;
+        }
         Minecraft client = event.getClient();
         Network.tick();
         handleBinds(client);
@@ -275,6 +286,33 @@ public final class ModuleManager {
         register(new ElytraHelper());
         register(new ServerHelper());
         register(new UseTracker());
+
+        register(new ClickGuiModule());
+        register(new SelfDestructModule());
+
+        register(new AutoClicker());
+        register(new Reach());
+        register(new NoFall());
+        register(new AntiAFK());
+        register(new FullBright());
+    }
+
+    /**
+     * Vape-style destruct: silence all tick handling and disable every
+     * module so no client surface remains active until restart.
+     */
+    public void destroy() {
+        destroyed = true;
+        bindStates.clear();
+        for (Module module : modules) {
+            if (module.isEnabled()) {
+                module.setEnabled(false);
+            }
+        }
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 
     private void handleBinds(Minecraft client) {
@@ -285,6 +323,11 @@ public final class ModuleManager {
 
         long handle = client.getWindow().handle();
         for (Module module : modules) {
+            // ClickGuiModule is driven by KeyboardHandlerMixin so pressing
+            // the bind works both to open and to close the GUI.
+            if (module instanceof ClickGuiModule) {
+                continue;
+            }
             KeyBind bind = module.getBind();
             boolean down = bind.isDown(handle);
             boolean wasDown = bindStates.getOrDefault(module, false);

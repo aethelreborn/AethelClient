@@ -343,10 +343,10 @@ public final class SettingCardController {
                     state.toggleWidth,
                     state.toggleHeight,
                     4,
-                    context.withAlpha(new Color(145, 115, 185, 250), animation),
-                    context.withAlpha(new Color(195, 135, 195, 250), animation),
-                    context.withAlpha(new Color(145, 115, 185, 250), animation),
-                    context.withAlpha(new Color(125, 105, 145, 250), animation)
+                    context.withAlpha(new Color(70, 110, 220, 250), animation),
+                    context.withAlpha(new Color(130, 170, 255, 250), animation),
+                    context.withAlpha(new Color(70, 110, 220, 250), animation),
+                    context.withAlpha(new Color(55, 85, 180, 250), animation)
             );
         } else {
             Render2D.rect(

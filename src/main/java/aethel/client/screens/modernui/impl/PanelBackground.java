@@ -6,6 +6,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import aethel.client.api.module.Module;
 import aethel.client.api.module.ModuleCategory;
+import aethel.client.screens.modernui.GuiTheme;
 import aethel.client.screens.modernui.settings.SettingCardController;
 import aethel.client.utils.render.ui.Render2D;
 import aethel.client.utils.render.ui.font.FontType;
@@ -54,21 +55,21 @@ public final class PanelBackground {
                 11,
                 50.0F,
                 1.5F,
-                new Color(255, 255, 255, 255).getRGB(),
-                new Color(255, 255, 255, 255).getRGB(),
-                new Color(255, 255, 255, 255).getRGB(),
-                new Color(255, 255, 255, 255).getRGB()
+                GuiTheme.NAVY_DEEP,
+                GuiTheme.NAVY_DEEP,
+                GuiTheme.NAVY_DEEP,
+                GuiTheme.NAVY_DEEP
         );
 
         Render2D.liquidGlass(x,
                 y - 0.5f,
                 panelWidth,
-                panelHeight, 2.0f, 0.075f, 11, new Color(255, 255, 255, 255).getRGB());
+                panelHeight, 2.0f, 0.075f, 11, new Color(150, 190, 255, 255).getRGB());
 
         Render2D.rect(x,
                 y - 0.5f,
                 panelWidth,
-                panelHeight, 11, new Color(8, 6, 12, 70).getRGB());
+                panelHeight, 11, new Color(8, 13, 28, 115).getRGB());
 
         // Accent sheen along the top edge of the glass panel.
         float sheen = panelWidth - 30.0F;
@@ -78,10 +79,10 @@ public final class PanelBackground {
                 sheen,
                 0.6F,
                 0,
-                new Color(0, 0, 0, 0).getRGB(),
-                new Color(0, 0, 0, 0).getRGB(),
-                new Color(180, 125, 255, 90).getRGB(),
-                new Color(180, 125, 255, 90).getRGB()
+                GuiTheme.rgb(90, 145, 255, 0),
+                GuiTheme.rgb(90, 145, 255, 0),
+                GuiTheme.rgb(90, 145, 255, 110),
+                GuiTheme.rgb(90, 145, 255, 110)
         );
 
         // Frosted sidebar rail for categories.
@@ -91,10 +92,10 @@ public final class PanelBackground {
                 40F,
                 panelHeight - 15.0F,
                 8,
-                new Color(255, 255, 255, 38).getRGB(),
-                new Color(255, 255, 255, 38).getRGB(),
-                new Color(90, 90, 100, 38).getRGB(),
-                new Color(90, 90, 100, 38).getRGB()
+                GuiTheme.rgb(140, 170, 235, 40),
+                GuiTheme.rgb(140, 170, 235, 40),
+                GuiTheme.rgb(35, 52, 100, 55),
+                GuiTheme.rgb(35, 52, 100, 55)
         );
 
         Render2D.outline(
@@ -104,10 +105,10 @@ public final class PanelBackground {
                 panelHeight - 15.0F,
                 8,
                 0.25f,
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(120, 120, 132, 95).getRGB(),
-                new Color(120, 120, 132, 95).getRGB()
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(70, 100, 180, 95),
+                GuiTheme.rgb(70, 100, 180, 95)
         );
 
         Render2D.rect(
@@ -116,7 +117,7 @@ public final class PanelBackground {
                 25F,
                 25F,
                 5,
-                new Color(140, 140, 155, 55).getRGB()
+                GuiTheme.rgb(110, 140, 220, 60)
         );
 
         Render2D.outline(
@@ -147,20 +148,20 @@ public final class PanelBackground {
         Render2D.rect(
                 x + 53.0F, y + 41.5F, panelWidth - 60.0F, panelHeight - 49.0F,
                 6,
-                new Color(200, 200, 210, 38).getRGB(),
-                new Color(200, 200, 210, 38).getRGB(),
-                new Color(92, 92, 102, 38).getRGB(),
-                new Color(92, 92, 102, 38).getRGB()
+                GuiTheme.rgb(145, 175, 235, 50),
+                GuiTheme.rgb(145, 175, 235, 50),
+                GuiTheme.rgb(38, 56, 104, 60),
+                GuiTheme.rgb(38, 56, 104, 60)
         );
 
         Render2D.outline(
                 x + 53.0F, y + 41.5F, panelWidth - 60.0F, panelHeight - 49.0F,
                 6,
                 0.25f,
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(120, 120, 132, 95).getRGB(),
-                new Color(120, 120, 132, 95).getRGB()
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(70, 100, 180, 95),
+                GuiTheme.rgb(70, 100, 180, 95)
         );
 
         // Top strip with the category title + search.
@@ -170,10 +171,10 @@ public final class PanelBackground {
                 panelWidth - 60.0F,
                 30,
                 6,
-                new Color(200, 200, 210, 38).getRGB(),
-                new Color(200, 200, 210, 38).getRGB(),
-                new Color(200, 200, 210, 38).getRGB(),
-                new Color(200, 200, 210, 38).getRGB()
+                GuiTheme.rgb(145, 175, 235, 50),
+                GuiTheme.rgb(145, 175, 235, 50),
+                GuiTheme.rgb(145, 175, 235, 50),
+                GuiTheme.rgb(145, 175, 235, 50)
         );
 
         Render2D.outline(
@@ -183,10 +184,10 @@ public final class PanelBackground {
                 30,
                 6,
                 0.25f,
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(255, 255, 255, 85).getRGB(),
-                new Color(255, 255, 255, 85).getRGB()
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(170, 195, 255, 85),
+                GuiTheme.rgb(170, 195, 255, 85)
         );
     }
 }
