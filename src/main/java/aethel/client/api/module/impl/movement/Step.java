@@ -2,7 +2,7 @@ package aethel.client.api.module.impl.movement;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import aethel.client.api.module.Module;
@@ -33,7 +33,8 @@ public final class Step extends Module {
         if (client.player == null || !client.player.onGround() || client.options == null) {
             return;
         }
-        if (cooldown > 0 || client.screen != null || client.player.isInWater() || client.player.isClimbing()) {
+        if (cooldown > 0 || client.screen != null || client.player.isInWater()
+                || client.level.getBlockState(client.player.blockPosition()).is(BlockTags.CLIMBABLE)) {
             return;
         }
         if (onlyRunning.getValue() && !isMoving(client)) {

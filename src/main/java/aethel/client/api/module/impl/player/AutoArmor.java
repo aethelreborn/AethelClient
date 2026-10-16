@@ -1,11 +1,14 @@
 package aethel.client.api.module.impl.player;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.Equippable;
 import aethel.client.api.module.Module;
 import aethel.client.api.module.ModuleCategory;
@@ -106,8 +109,22 @@ public final class AutoArmor extends Module {
         if (stack.isEmpty()) {
             return -1;
         }
-        double armor = stack.getAttributeValue(Attributes.ARMOR);
-        double toughness = stack.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+        double armor = componentAttributeValue(stack, Attributes.ARMOR);
+        double toughness = componentAttributeValue(stack, Attributes.ARMOR_TOUGHNESS);
         return (int) Math.round(armor * 10.0D + toughness);
+    }
+
+    private double componentAttributeValue(ItemStack stack, Holder<Attribute> attribute) {
+        ItemAttributeModifiers modifiers = stack.get(DataComponents.ATTRIBUTE_MODIFIERS);
+        if (modifiers == null) {
+            return 0.0D;
+        }
+        double total = 0.0D;
+        for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
+            if (entry.attribute().value() == attribute.value()) {
+                total += entry.modifier().amount();
+            }
+        }
+        return total;
     }
 }
