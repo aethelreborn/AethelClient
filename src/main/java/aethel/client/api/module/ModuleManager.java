@@ -32,6 +32,10 @@ import aethel.client.api.module.impl.combat.AutoClicker;
 import aethel.client.api.module.impl.combat.Reach;
 import aethel.client.api.module.impl.movement.NoFall;
 import aethel.client.api.module.impl.movement.AntiAFK;
+import aethel.client.api.module.impl.movement.SafeWalk;
+import aethel.client.api.module.impl.movement.Step;
+import aethel.client.api.module.impl.player.AutoArmor;
+import aethel.client.api.module.impl.misc.BaseFinder;
 import aethel.client.api.module.impl.visual.FullBright;
 import aethel.client.api.module.impl.misc.DeathCoords;
 import aethel.client.api.module.impl.misc.ElytraHelper;
@@ -294,6 +298,10 @@ public final class ModuleManager {
         register(new Reach());
         register(new NoFall());
         register(new AntiAFK());
+        register(new SafeWalk());
+        register(new Step());
+        register(new AutoArmor());
+        register(new BaseFinder());
         register(new FullBright());
     }
 
