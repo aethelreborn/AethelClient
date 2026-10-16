@@ -14,6 +14,7 @@ import aethel.client.api.module.ModuleCategory;
 import aethel.client.api.settings.impl.BooleanSetting;
 import aethel.client.api.settings.impl.ModeSetting;
 import aethel.client.api.settings.impl.NumberSetting;
+import aethel.client.mixin.accessor.MinecraftAccessor;
 import aethel.client.mixin.accessor.MultiPlayerGameModeAccessor;
 
 import java.util.concurrent.ThreadLocalRandom;
