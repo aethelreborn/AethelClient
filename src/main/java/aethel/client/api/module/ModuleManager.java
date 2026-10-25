@@ -341,6 +341,7 @@ public final class ModuleManager {
         register(new SpeedNCP());
         register(new AutoInteract());
         register(new AutoDrop());
+        register(new AutoSwap());
     }
 
     /**
