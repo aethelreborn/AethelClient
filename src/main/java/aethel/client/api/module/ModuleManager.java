@@ -331,6 +331,8 @@ public final class ModuleManager {
         register(new Fly());
         register(new AntiVoid());
         register(new Scaffold());
+        register(new AutoRespawn());
+        register(new AutoWalk());
     }
 
     /**
