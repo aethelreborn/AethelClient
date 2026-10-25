@@ -297,6 +297,12 @@ public final class ModuleManager {
         register(new ClickGuiModule());
         register(new SelfDestructModule());
 
+        register(new Derp());
+        register(new Twerk());
+
+        register(new Killaura());
+        register(new AimAssist());
+
         register(new AutoClicker());
         register(new Reach());
         register(new NoFall());
