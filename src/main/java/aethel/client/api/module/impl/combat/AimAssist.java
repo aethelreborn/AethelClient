@@ -36,7 +36,7 @@ public class AimAssist extends Module {
 
         // Calculate aim direction
         double deltaX = target.getX() - mc.player.getX();
-        double deltaY = target.getYEye() - mc.player.getYEye();
+        double deltaY = target.getEyeY() - mc.player.getEyeY();
         double deltaZ = target.getZ() - mc.player.getZ();
 
         float targetYaw = (float) (Math.atan2(deltaZ, deltaX) * (double) (180 / Math.PI)) - 90.0F;
@@ -80,10 +80,10 @@ public class AimAssist extends Module {
         double bestDist = fov.getValue();
 
         for (Entity entity : mc.level.getEntitiesOfClass(Entity.class, mc.player.getBoundingBox().inflate(fov.getValue()))) {
-            if (entity == mc.player || entity.invulnerable) continue;
+            if (entity == mc.player) continue;
             
             // Simple check - in a full implementation would check visibility
-            double dist = entity.squaredDistanceTo(mc.player);
+            double dist = entity.distanceToSqr(mc.player);
             if (dist < bestDist * bestDist && entity instanceof LivingEntity) {
                 bestDist = dist;
                 nearest = entity;

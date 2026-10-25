@@ -48,7 +48,7 @@ public class Killaura extends Module {
 
         // Calculate rotations
         double deltaX = target.getX() - mc.player.getX();
-        double deltaY = target.getYEye() - mc.player.getYEye();
+        double deltaY = target.getEyeY() - mc.player.getEyeY();
         double deltaZ = target.getZ() - mc.player.getZ();
 
         float yaw = (float) (Math.atan2(deltaZ, deltaX) * (double) (180 / Math.PI)) - 90.0F;
@@ -86,9 +86,9 @@ public class Killaura extends Module {
         double bestDist = range.getValue();
 
         for (Entity entity : mc.level.getEntitiesOfClass(Entity.class, mc.player.getBoundingBox().inflate(range.getValue()))) {
-            if (entity == mc.player || entity.invulnerable) continue;
+            if (entity == mc.player) continue;
             if (entity instanceof LivingEntity) {
-                double dist = entity.squaredDistanceTo(mc.player);
+                double dist = entity.distanceToSqr(mc.player);
                 if (dist < bestDist * bestDist) {
                     bestDist = dist;
                     nearest = entity;
