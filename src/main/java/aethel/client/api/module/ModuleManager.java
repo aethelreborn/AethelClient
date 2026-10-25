@@ -264,10 +264,9 @@ public final class ModuleManager {
         register(new SeeInvisible());
         register(new SwingAnimation());
         register(new ViewModel());
-        register(new NoRender());
-        register(new TargetESP());
-
+        register(new NoRender());        register(new TargetESP());
         register(new WindJump());
+        register(new ModuleBrightness());
         register(new OpenWalls());
         register(new NoPush());
         register(new NoEntityTrace());
