@@ -333,6 +333,10 @@ public final class ModuleManager {
         register(new Scaffold());
         register(new AutoRespawn());
         register(new AutoWalk());
+        register(new AutoSprint());
+        register(new NoPush());
+        register(new SuperFireWork());
+        register(new Sneak());
     }
 
     /**
