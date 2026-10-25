@@ -337,6 +337,8 @@ public final class ModuleManager {
         register(new NoPush());
         register(new SuperFireWork());
         register(new Sneak());
+        register(new AutoInteract());
+        register(new AutoDrop());
     }
 
     /**
