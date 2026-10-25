@@ -229,6 +229,7 @@ public final class ModuleManager {
         register(new MaceTarget());
         register(new HitSound());
         register(new ModuleAutoJump());
+        register(new AutoPotion());
         register(new NoFriendDamage());
         register(new NoInteract());
         register(new TriggerBot());
@@ -343,7 +344,6 @@ public final class ModuleManager {
         register(new SpeedNCP());
         register(new AutoInteract());
         register(new AutoDrop());
-        register(new AutoSwap());
     }
 
     /**
