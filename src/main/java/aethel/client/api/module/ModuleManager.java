@@ -231,6 +231,7 @@ public final class ModuleManager {
         register(new ModuleAutoJump());
         register(new AutoPotion());
         register(new AutoEat());
+        register(new AutoSmelt());
         register(new NoFriendDamage());
         register(new NoInteract());
         register(new TriggerBot());
