@@ -317,6 +317,8 @@ public final class ModuleManager {
         register(new AutoArmor());
         register(new BaseFinder());
         register(new Timer());
+        register(new AntiExploit());
+        register(new AutoBreak());
         register(new AutoFish());
         register(new Scaffold());
         register(new FullBright());
