@@ -1,5 +1,6 @@
 package aethel.client.api.module.impl.fun;
 
+import net.minecraft.client.Minecraft;
 import aethel.client.api.module.Module;
 import aethel.client.api.module.ModuleCategory;
 import aethel.client.api.settings.bind.KeyBind;
@@ -13,7 +14,7 @@ public class Derp extends Module {
     }
 
     @Override
-    public void onTick() {
+    public void onTick(Minecraft client) {
         if (derpMode.getValue()) {
             // Derp mode logic - random movements/animations
         }

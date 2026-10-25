@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoEat extends Module {
     public AutoEat() {
-        super("AutoEat", "AutoEat", ModuleType.PLAYER, "p");
+        super("AutoEat", "AutoEat", ModuleCategory.PLAYER);
     }
     
     @Override

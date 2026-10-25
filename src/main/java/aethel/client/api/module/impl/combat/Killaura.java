@@ -7,10 +7,10 @@ import aethel.client.api.settings.impl.BooleanSetting;
 import aethel.client.api.settings.impl.ModeSetting;
 import aethel.client.api.settings.impl.NumberSetting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.Player;
-import net.minecraft.util.MathHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
 
 public class Killaura extends Module {
     private final ModeSetting mode = register(new ModeSetting("Mode", "Killaura mode", "Vanilla", "Vanilla", "Rotations", "Packet"));
@@ -27,13 +27,13 @@ public class Killaura extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (legit.getValue()) {
             // Legit mode: slower, more humanized targeting
-            handleLegalMode();
+            handleLegitMode();
         } else {
             // Normal mode
             handleNormalMode();
@@ -52,16 +52,16 @@ public class Killaura extends Module {
         double deltaZ = target.getZ() - mc.player.getZ();
 
         float yaw = (float) (Math.atan2(deltaZ, deltaX) * (double) (180 / Math.PI)) - 90.0F;
-        float pitch = (float) (-Math.atan2(deltaY, (double) MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * (double) (180 / Math.PI));
+        float pitch = (float) (-Math.atan2(deltaY, (double) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * (double) (180 / Math.PI));
 
         // Apply with some randomness to avoid detection
-        if (mc.options.keyAttack.isPressed()) {
+        if (mc.options.keyAttack.isDown()) {
             // Set rotations with slight variation
-            mc.player.setYaw(yaw + (float) (Math.random() * 2.0 - 1.0));
-            mc.player.setPitch(pitch + (float) (Math.random() * 2.0 - 1.0));
+            mc.player.setYRot(yaw + (float) (Math.random() * 2.0 - 1.0));
+            mc.player.setXRot(pitch + (float) (Math.random() * 2.0 - 1.0));
             
             if (systemTime() - lastAttack > 200) {
-                mc.player.attackEntityFrom(null, 1.0F); // Simulated attack
+                // Simulated attack (stub)
                 lastAttack = systemTime();
             }
         }
@@ -85,7 +85,7 @@ public class Killaura extends Module {
         Entity nearest = null;
         double bestDist = range.getValue();
 
-        for (Entity entity : mc.world.getEntitiesOfClass(Entity.class, mc.getBoundingBox().expand(range.getValue()))) {
+        for (Entity entity : mc.level.getEntitiesOfClass(Entity.class, mc.player.getBoundingBox().inflate(range.getValue()))) {
             if (entity == mc.player || entity.invulnerable) continue;
             if (entity instanceof LivingEntity) {
                 double dist = entity.squaredDistanceTo(mc.player);

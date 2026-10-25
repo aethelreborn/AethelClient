@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.movement;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class ModuleAutoJump extends Module {
     public ModuleAutoJump() {
-        super("AutoJump", "AutoJump", ModuleType.MOVEMENT, "m");
+        super("AutoJump", "AutoJump", ModuleCategory.MOVEMENT);
     }
     
     @Override

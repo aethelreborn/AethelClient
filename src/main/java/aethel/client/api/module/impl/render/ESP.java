@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.render;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class ESP extends Module {
     public ESP() {
-        super("ESP", "ESP", ModuleType.RENDER, "r");
+        super("ESP", "ESP", ModuleCategory.VISUAL);
     }
     
     @Override

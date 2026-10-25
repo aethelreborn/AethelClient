@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.movement;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class Sneak extends Module {
     public Sneak() {
-        super("Sneak", "Sneak", ModuleType.MOVEMENT, "m");
+        super("Sneak", "Sneak", ModuleCategory.MOVEMENT);
     }
     
     @Override

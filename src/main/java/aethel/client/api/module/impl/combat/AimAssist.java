@@ -7,8 +7,9 @@ import aethel.client.api.settings.impl.ModeSetting;
 import aethel.client.api.settings.impl.NumberSetting;
 import aethel.client.api.settings.impl.BooleanSetting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.util.Mth;
 
 public class AimAssist extends Module {
     private final ModeSetting mode = register(new ModeSetting("Mode", "Aim assist mode", "Smooth", "Smooth", "Instant", "Legit"));
@@ -24,9 +25,9 @@ public class AimAssist extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (systemTime() - lastAim < 50) return; // Debounce
 
@@ -39,32 +40,32 @@ public class AimAssist extends Module {
         double deltaZ = target.getZ() - mc.player.getZ();
 
         float targetYaw = (float) (Math.atan2(deltaZ, deltaX) * (double) (180 / Math.PI)) - 90.0F;
-        float targetPitch = (float) (-Math.atan2(deltaY, (double) MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * (double) (180 / Math.PI));
+        float targetPitch = (float) (-Math.atan2(deltaY, (double) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * (double) (180 / Math.PI));
 
         if (mode.is("Smooth")) {
             // Smooth aiming - interpolate toward target
-            float currentYaw = mc.player.getYaw();
-            float currentPitch = mc.player.getPitch();
+            float currentYaw = mc.player.getYRot();
+            float currentPitch = mc.player.getXRot();
 
             // Interpolate with smoothness factor
-            float newYaw = currentYaw + (targetYaw - currentYaw) / smoothness.getValue();
-            float newPitch = currentPitch + (targetPitch - currentPitch) / smoothness.getValue();
+            float newYaw = (float) (currentYaw + (targetYaw - currentYaw) / smoothness.getValue());
+            float newPitch = (float) (currentPitch + (targetPitch - currentPitch) / smoothness.getValue());
 
             // Apply rotations
-            mc.player.setYaw(newYaw);
-            mc.player.setPitch(MathHelper.clamp(newPitch, -90.0F, 90.0F));
+            mc.player.setYRot(newYaw);
+            mc.player.setXRot(Mth.clamp(newPitch, -90.0F, 90.0F));
         } else if (mode.is("Instant")) {
             // Instant aiming (less detectable in some contexts)
-            mc.player.setYaw(targetYaw);
-            mc.player.setPitch(MathHelper.clamp(targetPitch, -90.0F, 90.0F));
+            mc.player.setYRot(targetYaw);
+            mc.player.setXRot(Mth.clamp(targetPitch, -90.0F, 90.0F));
         } else if (mode.is("Legit")) {
             // Legit aiming with more natural variation
             float noise = (float) (Math.random() * 2.0 - 1.0);
-            mc.player.setYaw(targetYaw + noise);
-            mc.player.setPitch(MathHelper.clamp(targetPitch + noise, -90.0F, 90.0F));
+            mc.player.setYRot(targetYaw + noise);
+            mc.player.setXRot(Mth.clamp(targetPitch + noise, -90.0F, 90.0F));
         }
 
-        if (autoFire.getValue() && mc.options.keyAttack.isPressed()) {
+        if (autoFire.getValue() && mc.options.keyAttack.isDown()) {
             // Auto-fire logic
             if (systemTime() - lastAim > 100) {
                 // Simulate attack
@@ -78,7 +79,7 @@ public class AimAssist extends Module {
         Entity nearest = null;
         double bestDist = fov.getValue();
 
-        for (Entity entity : mc.world.getEntitiesOfClass(Entity.class, mc.getBoundingBox().expand(fov.getValue()))) {
+        for (Entity entity : mc.level.getEntitiesOfClass(Entity.class, mc.player.getBoundingBox().inflate(fov.getValue()))) {
             if (entity == mc.player || entity.invulnerable) continue;
             
             // Simple check - in a full implementation would check visibility

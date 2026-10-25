@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoPotion extends Module {
     public AutoPotion() {
-        super("AutoPotion", "AutoPotion", ModuleType.PLAYER, "p");
+        super("AutoPotion", "AutoPotion", ModuleCategory.PLAYER);
     }
     
     @Override

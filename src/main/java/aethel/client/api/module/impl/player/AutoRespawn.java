@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoRespawn extends Module {
     public AutoRespawn() {
-        super("AutoRespawn", "AutoRespawn", ModuleType.PLAYER, "p");
+        super("AutoRespawn", "AutoRespawn", ModuleCategory.PLAYER);
     }
     
     @Override

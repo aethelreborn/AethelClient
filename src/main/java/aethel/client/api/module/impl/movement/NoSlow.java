@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 public class NoSlow extends Module {
     private final ModeSetting mode = register(new ModeSetting("Mode", "NoSlow mode", "Packet", "Packet", "Rotations", "Vanilla", "Legit"));
     private final NumberSetting slowFactor = register(new NumberSetting("SlowFactor", "How much to ignore slowdown", 0.5, 0.0, 1.0, 0.1));
-    private final BooleanPacketSetting predictRotations = register(new BooleanPacketSetting("PredictRotations", "Predict rotations to bypass", true));
+    private final BooleanSetting predictRotations = register(new BooleanSetting("PredictRotations", "Predict rotations to bypass", true));
     private final BooleanSetting motion = register(new BooleanSetting("Motion", "Maintain motion", true));
     private final BooleanSetting legit = register(new BooleanSetting("Legit", "Legit mode (less detectable)", false));
 
@@ -23,9 +23,9 @@ public class NoSlow extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (legit.getValue()) {
             handleLegalMode();
@@ -49,7 +49,6 @@ public class NoSlow extends Module {
             // This would normally set motion packets
         } else if (mode.is("Vanilla")) {
             // Vanilla NoSlow: simple speed reduction ignore
-            originalMoveSpeed = mc.player.getMoveSpeed();
             // mc.player.setMoveSpeed(originalMoveSpeed / slowFactor.getValue());
         } else if (mode.is("Legit")) {
             // Legit NoSlow: more humanized, gradual speed restoration
@@ -73,8 +72,3 @@ public class NoSlow extends Module {
     }
 }
 
-// Helper annotation for packet settings
-@interface BooleanPacketSetting {
-    String value();
-    default String[] array() { return new String[0]; }
-}

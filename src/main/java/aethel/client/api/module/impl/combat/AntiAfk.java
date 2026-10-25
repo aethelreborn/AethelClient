@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AntiAfk extends Module {
     public AntiAfk() {
-        AntiAfk, AntiAfk, ModuleType.COMBAT, "e");
+        super("AntiAfk", "AntiAfk", ModuleCategory.COMBAT);
     }
     
     @Override

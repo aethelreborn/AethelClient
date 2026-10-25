@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class SafeWalk extends Module {
     public SafeWalk() {
-        super("SafeWalk", "SafeWalk", ModuleType.COMBAT, "e");
+        super("SafeWalk", "SafeWalk", ModuleCategory.COMBAT);
     }
     
     @Override

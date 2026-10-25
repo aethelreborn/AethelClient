@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoDrop extends Module {
     public AutoDrop() {
-        super("AutoDrop", "AutoDrop", ModuleType.PLAYER, "p");
+        super("AutoDrop", "AutoDrop", ModuleCategory.PLAYER);
     }
     
     @Override

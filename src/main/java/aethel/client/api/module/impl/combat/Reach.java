@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class Reach extends Module {
     public Reach() {
-        super("Reach", "Reach", ModuleType.COMBAT, "e");
+        super("Reach", "Reach", ModuleCategory.COMBAT);
     }
     
     @Override

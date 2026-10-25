@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoSwitch extends Module {
     public AutoSwitch() {
-        super("AutoSwitch", "AutoSwitch", ModuleType.COMBAT, "e");
+        super("AutoSwitch", "AutoSwitch", ModuleCategory.COMBAT);
     }
     
     @Override

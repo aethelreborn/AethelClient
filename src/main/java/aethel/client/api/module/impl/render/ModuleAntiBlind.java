@@ -16,13 +16,13 @@ public class ModuleAntiBlind extends Module {
     private long lastAntiBlind = 0;
 
     public ModuleAntiBlind() {
-        super("ModuleAntiBlind", "Anti-blind effects", ModuleCategory.RENDER);
+        super("ModuleAntiBlind", "Anti-blind effects", ModuleCategory.VISUAL);
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (legit.getValue()) {
             handleLegalMode();

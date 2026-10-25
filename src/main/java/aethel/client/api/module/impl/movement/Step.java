@@ -22,9 +22,9 @@ public class Step extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (legit.getValue()) {
             handleLegalMode();
@@ -38,7 +38,7 @@ public class Step extends Module {
 
         // Step module automatically makes player jump and climb
         // without needing to jump manually
-        if (step.getValue() && !mc.player.isOnLadder() && !mc.player.isInWater()) {
+        if (step.getValue() && !mc.player.onClimbable() && !mc.player.isInWater()) {
             // In a real client, this would mixin the player movement
             // to automatically handle stepping up blocks
             // mc.player.jump();

@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoCrystal extends Module {
     public AutoCrystal() {
-        super("AutoCrystal", "AutoCrystal", ModuleType.COMBAT, "e");
+        super("AutoCrystal", "AutoCrystal", ModuleCategory.COMBAT);
     }
     
     @Override

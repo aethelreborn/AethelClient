@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.fun;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class Twerk extends Module {
     public Twerk() {
-        super("Twerk", "Twerk", ModuleType.FUN, "f");
+        super("Twerk", "Twerk", ModuleCategory.FUN);
     }
     
     @Override

@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.movement;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class SpeedVerus extends Module {
     public SpeedVerus() {
-        super("SpeedVerus", "SpeedVerus", ModuleType.MOVEMENT, "m");
+        super("SpeedVerus", "SpeedVerus", ModuleCategory.MOVEMENT);
     }
     
     @Override

@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class Aura extends Module {
     public Aura() {
-        super("Aura", "Aura", ModuleType.COMBAT, "e");
+        super("Aura", "Aura", ModuleCategory.COMBAT);
     }
     
     @Override

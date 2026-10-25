@@ -24,11 +24,11 @@ public class AutoClicker extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
 
         if (hold.getValue()) {
-            isClicking = mc.options.keyAttack.isPressed();
+            isClicking = mc.options.keyAttack.isDown();
         } else {
             isClicking = isEnabled();
         }
@@ -39,7 +39,7 @@ public class AutoClicker extends Module {
 
         if (systemTime() - lastClick >= clickInterval) {
             // Simulate left click
-            if (mc.options.keyAttack.isPressed() || !middleClick.getValue()) {
+            if (mc.options.keyAttack.isDown() || !middleClick.getValue()) {
                 // Click logic - in real client this would interact with game
                 lastClick = systemTime();
             }
@@ -53,10 +53,10 @@ public class AutoClicker extends Module {
             double baseInterval = 1000.0 / cps.getValue();
             // Add some variation (±20%)
             double variation = baseInterval * 0.2;
-            clickInterval = baseInterval + (Math.random() * variation * 2 - variation);
+            clickInterval = (long) (baseInterval + (Math.random() * variation * 2 - variation));
         } else {
             // Fixed CPS
-            clickInterval = 1000.0 / cps.getValue();
+            clickInterval = (long) (1000.0 / cps.getValue());
         }
     }
 

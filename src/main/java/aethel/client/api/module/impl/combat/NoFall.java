@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.combat;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class NoFall extends Module {
     public NoFall() {
-        super("NoFall", "NoFall", ModuleType.COMBAT, "e");
+        super("NoFall", "NoFall", ModuleCategory.COMBAT);
     }
     
     @Override

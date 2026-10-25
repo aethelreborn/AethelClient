@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoInteract extends Module {
     public AutoInteract() {
-        super("AutoInteract", "AutoInteract", ModuleType.PLAYER, "p");
+        super("AutoInteract", "AutoInteract", ModuleCategory.PLAYER);
     }
     
     @Override

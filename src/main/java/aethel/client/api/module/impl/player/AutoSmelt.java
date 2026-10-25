@@ -1,11 +1,11 @@
 package aethel.client.api.module.impl.player;
 
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleType;
+import aethel.client.api.module.ModuleCategory;
 
 public class AutoSmelt extends Module {
     public AutoSmelt() {
-        super("AutoSmelt", "AutoSmelt", ModuleType.PLAYER, "p");
+        super("AutoSmelt", "AutoSmelt", ModuleCategory.PLAYER);
     }
     
     @Override

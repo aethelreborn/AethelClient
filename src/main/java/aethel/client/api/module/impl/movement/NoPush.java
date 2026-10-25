@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 
 public class NoPush extends Module {
     private final ModeSetting mode = register(new ModeSetting("Mode", "NoPush mode", "Vanilla", "Vanilla", "Rotations", "Packet", "Legit"));
-    private final BooleanSetting push immunity = register(new BooleanSetting("Immunity", "Immune to knockback", true));
+    private final BooleanSetting pushImmunity = register(new BooleanSetting("Immunity", "Immune to knockback", true));
     private final BooleanSetting legit = register(new BooleanSetting("Legit", "Legit mode (less detectable)", false));
 
     private long lastNoPush = 0;
@@ -20,9 +20,9 @@ public class NoPush extends Module {
     }
 
     @Override
-    public void onTick() {
-        Minecraft mc = mc();
-        if (mc.world == null || mc.player == null) return;
+    public void onTick(Minecraft client) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
 
         if (legit.getValue()) {
             handleLegalMode();
