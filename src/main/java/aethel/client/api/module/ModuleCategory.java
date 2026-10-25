@@ -5,7 +5,9 @@ public enum ModuleCategory {
     MOVEMENT("Movement", "j"),
     VISUAL("Visual", "a"),
     PLAYER("Player", "t"),
-    MISC("Misc", "d");
+    MISC("Misc", "d"),
+    EXPLOIT("Exploit", "e"),
+    FUN("Fun", "f");
 
     private final String displayName;
     private final String icon;

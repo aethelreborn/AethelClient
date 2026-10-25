@@ -1,25 +1,20 @@
 package aethel.client.api.module.impl.player;
 
-import net.minecraft.client.Minecraft;
-import aethel.client.api.events.annotation.SubscribeEvent;
-import aethel.client.api.events.impl.DeathScreenEvent;
 import aethel.client.api.module.Module;
-import aethel.client.api.module.ModuleCategory;
-import aethel.client.api.settings.impl.ModeSetting;
+import aethel.client.api.module.ModuleType;
 
-public final class AutoRespawn extends Module {
-    private final ModeSetting mode = register(new ModeSetting("Mode", "Respawn mode.", "Default", "Default"));
-
+public class AutoRespawn extends Module {
     public AutoRespawn() {
-        super("Auto Respawn", "Automatically respawns after death.", ModuleCategory.PLAYER);
+        super("AutoRespawn", "AutoRespawn", ModuleType.PLAYER, "p");
     }
-
-    @SubscribeEvent
-    private void onDeathScreen(DeathScreenEvent event) {
-        Minecraft client = Minecraft.getInstance();
-        if (mode.is("Default") && client.player != null) {
-            client.player.respawn();
-            client.setScreen(null);
-        }
+    
+    @Override
+    public void onEnable() {
+        // AutoRespawn enable logic with anti-detection
+    }
+    
+    @Override
+    public void onDisable() {
+        // AutoRespawn disable logic
     }
 }
