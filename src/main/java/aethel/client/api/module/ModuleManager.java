@@ -322,6 +322,8 @@ public final class ModuleManager {
         register(new AutoFish());
         register(new Scaffold());
         register(new FullBright());
+        register(new ESP());
+        register(new Chams());
     }
 
     /**
