@@ -343,6 +343,7 @@ public final class ModuleManager {
         register(new SpeedYPort());
         register(new SpeedNCP());
         register(new AutoInteract());
+        register(new SpeedVerus());
         register(new AutoDrop());
     }
 
