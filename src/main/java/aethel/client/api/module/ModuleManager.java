@@ -328,6 +328,8 @@ public final class ModuleManager {
         register(new Chams());
         register(new ModuleDankBobbing());
         register(new ModuleHandDerp());
+        register(new Fly());
+        register(new AntiVoid());
     }
 
     /**
