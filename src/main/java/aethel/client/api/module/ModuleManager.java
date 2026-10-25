@@ -230,6 +230,7 @@ public final class ModuleManager {
         register(new HitSound());
         register(new ModuleAutoJump());
         register(new AutoPotion());
+        register(new AutoEat());
         register(new NoFriendDamage());
         register(new NoInteract());
         register(new TriggerBot());
