@@ -330,6 +330,7 @@ public final class ModuleManager {
         register(new ModuleHandDerp());
         register(new Fly());
         register(new AntiVoid());
+        register(new Scaffold());
     }
 
     /**
