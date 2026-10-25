@@ -228,6 +228,7 @@ public final class ModuleManager {
         register(new HitBoxModule());
         register(new MaceTarget());
         register(new HitSound());
+        register(new ModuleAutoJump());
         register(new NoFriendDamage());
         register(new NoInteract());
         register(new TriggerBot());
