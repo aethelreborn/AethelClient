@@ -303,6 +303,11 @@ public final class ModuleManager {
         register(new Killaura());
         register(new AimAssist());
 
+        register(new Speed());
+        register(new NoSlow());
+
+        register(new Step());
+
         register(new AutoClicker());
         register(new Reach());
         register(new NoFall());
