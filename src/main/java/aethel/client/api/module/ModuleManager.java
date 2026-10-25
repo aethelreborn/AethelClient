@@ -326,6 +326,7 @@ public final class ModuleManager {
         register(new ModuleAntiHunger());
         register(new ESP());
         register(new Chams());
+        register(new ModuleAntiBlind());
         register(new ModuleDankBobbing());
         register(new ModuleHandDerp());
         register(new Fly());
